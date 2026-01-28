@@ -1,0 +1,24 @@
+{
+  "textures": {
+    "north": "jukeboxplus:block/advanced_jukebox_front",
+    "south": "jukeboxplus:block/advanced_jukebox_side",
+    "east": "jukeboxplus:block/advanced_jukebox_side",
+    "west": "jukeboxplus:block/advanced_jukebox_side",
+    "up": "jukeboxplus:block/advanced_jukebox_top",
+    "down": "jukeboxplus:block/advanced_jukebox_bottom"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": { "texture": "#north" },
+        "south": { "texture": "#south" },
+        "east": { "texture": "#east" },
+        "west": { "texture": "#west" },
+        "up": { "texture": "#up" },
+        "down": { "texture": "#down" }
+      }
+    }
+  ]
+}
