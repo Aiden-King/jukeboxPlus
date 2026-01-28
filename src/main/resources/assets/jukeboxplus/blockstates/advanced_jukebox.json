@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "jukeboxplus:block/advanced_jukebox" },
+    "facing=east": { "model": "jukeboxplus:block/advanced_jukebox", "y": 90 },
+    "facing=south": { "model": "jukeboxplus:block/advanced_jukebox", "y": 180 },
+    "facing=west": { "model": "jukeboxplus:block/advanced_jukebox", "y": 270 }
+  }
+}
