@@ -22,17 +22,21 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.property.BooleanProperty;
 
 public class AdvancedJukeboxBlock extends BlockWithEntity {
 
     public static final Property<Direction> FACING = Properties.HORIZONTAL_FACING;
+    public static final BooleanProperty HAS_RECORD = Properties.HAS_RECORD;
 
     public static final MapCodec<AdvancedJukeboxBlock> CODEC =
             createCodec(AdvancedJukeboxBlock::new);
 
     public AdvancedJukeboxBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH));
+        setDefaultState(getStateManager().getDefaultState()
+                .with(FACING, Direction.NORTH)
+                .with(HAS_RECORD, false));
     }
 
     @Override
@@ -52,12 +56,13 @@ public class AdvancedJukeboxBlock extends BlockWithEntity {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        Direction facing = ctx.getHorizontalPlayerFacing().getOpposite().rotateYCounterclockwise();
+        return getDefaultState().with(FACING, facing);
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, HAS_RECORD);
     }
 
     @Override
@@ -100,6 +105,10 @@ public class AdvancedJukeboxBlock extends BlockWithEntity {
 
     @Override
     protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
+        if (world.getBlockState(pos).isOf(this)) {
+            super.onStateReplaced(state, world, pos, moved);
+            return;
+        }
         if (world.getBlockEntity(pos) instanceof AdvancedJukeboxBlockEntity jukebox) {
             ItemScatterer.spawn(world, pos, jukebox);
             jukebox.stopPlaying();

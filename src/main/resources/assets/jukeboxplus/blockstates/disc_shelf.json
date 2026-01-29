@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "jukeboxplus:block/disc_shelf"
-    }
+    "facing=north": { "model": "jukeboxplus:block/disc_shelf" },
+    "facing=east": { "model": "jukeboxplus:block/disc_shelf", "y": 90 },
+    "facing=south": { "model": "jukeboxplus:block/disc_shelf", "y": 180 },
+    "facing=west": { "model": "jukeboxplus:block/disc_shelf", "y": 270 }
   }
 }

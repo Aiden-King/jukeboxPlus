@@ -46,6 +46,7 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
 
     private void onManagerChange() {
         markDirty();
+        updateHasRecord(manager.isPlaying());
         if (world != null) {
             world.updateListeners(pos, getCachedState(), getCachedState(), 3);
         }
@@ -70,6 +71,7 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
         manager.startPlaying(world, songEntry.get());
         playingSlot = slot;
         markDirty();
+        updateHasRecord(true);
         return true;
     }
 
@@ -79,6 +81,7 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
         }
         playingSlot = -1;
         markDirty();
+        updateHasRecord(false);
     }
 
     @Override
@@ -154,6 +157,19 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
         markDirty();
         if (world != null) {
             world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        }
+    }
+
+    private void updateHasRecord(boolean hasRecord) {
+        if (world == null || world.isClient()) {
+            return;
+        }
+        if (!world.getBlockState(pos).isOf(ModBlocks.ADVANCED_JUKEBOX)) {
+            return;
+        }
+        BlockState state = getCachedState();
+        if (state.contains(AdvancedJukeboxBlock.HAS_RECORD) && state.get(AdvancedJukeboxBlock.HAS_RECORD) != hasRecord) {
+            world.setBlockState(pos, state.with(AdvancedJukeboxBlock.HAS_RECORD, hasRecord), 3);
         }
     }
 

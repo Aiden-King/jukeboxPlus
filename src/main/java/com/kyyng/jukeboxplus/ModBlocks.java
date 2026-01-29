@@ -35,6 +35,7 @@ public class ModBlocks {
     public static final Block DISC_SHELF = new DiscShelfBlock(
             AbstractBlock.Settings
                     .copy(Blocks.OAK_PLANKS)
+                    .nonOpaque()
                     .registryKey(DISC_SHELF_BLOCK_KEY)
     );
     public static final Block ADVANCED_JUKEBOX = new AdvancedJukeboxBlock(
