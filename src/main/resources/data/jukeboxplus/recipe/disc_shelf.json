@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IPI",
+    "PCP",
+    "IPI"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "P": "#minecraft:planks",
+    "C": "minecraft:chest"
+  },
+  "result": {
+    "id": "jukeboxplus:disc_shelf",
+    "count": 1
+  }
+}

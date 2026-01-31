@@ -8,5 +8,7 @@ public class JukeboxPlusClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		HandledScreens.register(ModScreenHandlers.DISC_SHELF, DiscShelfScreen::new);
 		HandledScreens.register(ModScreenHandlers.ADVANCED_JUKEBOX, AdvancedJukeboxScreen::new);
+		HandledScreens.register(ModScreenHandlers.TAPE_DECK, TapeDeckScreen::new);
+		HandledScreens.register(ModScreenHandlers.BLOCKMAN, BlockmanScreen::new);
 	}
 }

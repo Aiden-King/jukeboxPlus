@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "jukeboxplus:block/tape_deck_top",
+    "front": "jukeboxplus:block/tape_deck_front",
+    "side": "jukeboxplus:block/tape_deck_side"
+  }
+}

@@ -17,7 +17,7 @@ public class DiscShelfScreen extends HandledScreen<DiscShelfScreenHandler> {
     public DiscShelfScreen(DiscShelfScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         backgroundWidth = 176;
-        backgroundHeight = 184;
+        backgroundHeight = 133;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class DiscShelfScreen extends HandledScreen<DiscShelfScreenHandler> {
         titleX = ((backgroundWidth - PANEL_WIDTH) / 2) + PANEL_PADDING;
         titleY = 6;
         playerInventoryTitleX = 8;
-        playerInventoryTitleY = 92;
+        playerInventoryTitleY = 41;
     }
 
     @Override

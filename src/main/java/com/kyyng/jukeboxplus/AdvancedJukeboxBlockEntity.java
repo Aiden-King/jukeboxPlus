@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory, ExtendedScreenHandlerFactory<BlockPos> {
 
-    private static final int SLOT_COUNT = 36;
+    private static final int SLOT_COUNT = 32;
 
     private final DefaultedList<ItemStack> items =
             DefaultedList.ofSize(SLOT_COUNT, ItemStack.EMPTY);
@@ -33,6 +33,7 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
             new JukeboxManager(this::onManagerChange, pos);
 
     private int playingSlot = -1;
+    private boolean suppressStateUpdates;
 
     public AdvancedJukeboxBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ADVANCED_JUKEBOX, pos, state);
@@ -45,10 +46,13 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
     }
 
     private void onManagerChange() {
+        if (!manager.isPlaying()) {
+            playingSlot = -1;
+        }
         markDirty();
         updateHasRecord(manager.isPlaying());
         if (world != null) {
-            world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+            world.updateNeighbors(pos, getCachedState().getBlock());
         }
     }
 
@@ -86,6 +90,7 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
 
     @Override
     public void markRemoved() {
+        suppressStateUpdates = true;
         stopPlaying();
         super.markRemoved();
     }
@@ -161,15 +166,15 @@ public class AdvancedJukeboxBlockEntity extends BlockEntity implements Inventory
     }
 
     private void updateHasRecord(boolean hasRecord) {
-        if (world == null || world.isClient()) {
-            return;
-        }
-        if (!world.getBlockState(pos).isOf(ModBlocks.ADVANCED_JUKEBOX)) {
+        if (world == null || world.isClient() || suppressStateUpdates || isRemoved()) {
             return;
         }
         BlockState state = getCachedState();
+        if (!state.isOf(ModBlocks.ADVANCED_JUKEBOX)) {
+            return;
+        }
         if (state.contains(AdvancedJukeboxBlock.HAS_RECORD) && state.get(AdvancedJukeboxBlock.HAS_RECORD) != hasRecord) {
-            world.setBlockState(pos, state.with(AdvancedJukeboxBlock.HAS_RECORD, hasRecord), 3);
+            world.setBlockState(pos, state.with(AdvancedJukeboxBlock.HAS_RECORD, hasRecord), 2);
         }
     }
 

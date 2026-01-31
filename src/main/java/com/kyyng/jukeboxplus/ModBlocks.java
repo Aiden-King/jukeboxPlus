@@ -19,17 +19,23 @@ public class ModBlocks {
             Identifier.of(JukeboxPlus.MOD_ID, "disc_shelf");
     public static final Identifier ADVANCED_JUKEBOX_ID =
             Identifier.of(JukeboxPlus.MOD_ID, "advanced_jukebox");
+    public static final Identifier TAPE_DECK_ID =
+            Identifier.of(JukeboxPlus.MOD_ID, "tape_deck");
 
     // ---------- REGISTRY KEYS ----------
     public static final RegistryKey<Block> DISC_SHELF_BLOCK_KEY =
             RegistryKey.of(Registries.BLOCK.getKey(), DISC_SHELF_ID);
     public static final RegistryKey<Block> ADVANCED_JUKEBOX_BLOCK_KEY =
             RegistryKey.of(Registries.BLOCK.getKey(), ADVANCED_JUKEBOX_ID);
+    public static final RegistryKey<Block> TAPE_DECK_BLOCK_KEY =
+            RegistryKey.of(Registries.BLOCK.getKey(), TAPE_DECK_ID);
 
     public static final RegistryKey<Item> DISC_SHELF_ITEM_KEY =
             RegistryKey.of(Registries.ITEM.getKey(), DISC_SHELF_ID);
     public static final RegistryKey<Item> ADVANCED_JUKEBOX_ITEM_KEY =
             RegistryKey.of(Registries.ITEM.getKey(), ADVANCED_JUKEBOX_ID);
+    public static final RegistryKey<Item> TAPE_DECK_ITEM_KEY =
+            RegistryKey.of(Registries.ITEM.getKey(), TAPE_DECK_ID);
 
     // ---------- BLOCK ----------
     public static final Block DISC_SHELF = new DiscShelfBlock(
@@ -43,6 +49,11 @@ public class ModBlocks {
                     .copy(Blocks.JUKEBOX)
                     .registryKey(ADVANCED_JUKEBOX_BLOCK_KEY)
     );
+    public static final Block TAPE_DECK = new TapeDeckBlock(
+            AbstractBlock.Settings
+                    .copy(Blocks.LECTERN)
+                    .registryKey(TAPE_DECK_BLOCK_KEY)
+    );
 
     // ---------- ITEM ----------
     public static final Item DISC_SHELF_ITEM = new BlockItem(
@@ -52,6 +63,10 @@ public class ModBlocks {
     public static final Item ADVANCED_JUKEBOX_ITEM = new BlockItem(
             ADVANCED_JUKEBOX,
             new Item.Settings().registryKey(ADVANCED_JUKEBOX_ITEM_KEY)
+    );
+    public static final Item TAPE_DECK_ITEM = new BlockItem(
+            TAPE_DECK,
+            new Item.Settings().registryKey(TAPE_DECK_ITEM_KEY)
     );
 
     public static void register() {
@@ -67,6 +82,11 @@ public class ModBlocks {
                 ADVANCED_JUKEBOX_ID,
                 ADVANCED_JUKEBOX
         );
+        Registry.register(
+                Registries.BLOCK,
+                TAPE_DECK_ID,
+                TAPE_DECK
+        );
 
         // Register item
         Registry.register(
@@ -79,12 +99,18 @@ public class ModBlocks {
                 ADVANCED_JUKEBOX_ID,
                 ADVANCED_JUKEBOX_ITEM
         );
+        Registry.register(
+                Registries.ITEM,
+                TAPE_DECK_ID,
+                TAPE_DECK_ITEM
+        );
 
         // Add to creative tab
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL)
                 .register(entries -> {
                     entries.add(DISC_SHELF_ITEM);
                     entries.add(ADVANCED_JUKEBOX_ITEM);
+                    entries.add(TAPE_DECK_ITEM);
                 });
     }
 }

@@ -12,14 +12,14 @@ import net.minecraft.util.math.BlockPos;
 
 public class DiscShelfScreenHandler extends ScreenHandler {
 
-    private static final int SLOT_COUNT = 16;
-    private static final int SLOT_COLUMNS = 4;
-    private static final int SLOT_ROWS = 4;
+    private static final int SLOT_COUNT = 10;
+    private static final int SLOT_COLUMNS = 5;
+    private static final int SLOT_ROWS = 2;
     private static final int SLOT_SIZE = 18;
-    private static final int INVENTORY_X = 52;
-    private static final int INVENTORY_Y = 18;
+    private static final int INVENTORY_X = 43;
+    private static final int INVENTORY_Y = 10;
     private static final int PLAYER_INV_X = 8;
-    private static final int PLAYER_INV_Y = 102;
+    private static final int PLAYER_INV_Y = 51;
     private static final int HOTBAR_Y = PLAYER_INV_Y + 58;
 
     private final Inventory inventory;

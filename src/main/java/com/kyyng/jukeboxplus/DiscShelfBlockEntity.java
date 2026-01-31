@@ -19,7 +19,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class DiscShelfBlockEntity extends BlockEntity implements Inventory, ExtendedScreenHandlerFactory<BlockPos> {
 
     private final DefaultedList<ItemStack> items =
-            DefaultedList.ofSize(16, ItemStack.EMPTY);
+            DefaultedList.ofSize(10, ItemStack.EMPTY);
 
     public DiscShelfBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DISC_SHELF, pos, state);

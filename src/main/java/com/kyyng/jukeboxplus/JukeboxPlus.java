@@ -10,6 +10,7 @@ public class JukeboxPlus implements ModInitializer {
 	public void onInitialize() {
 		ModBlocks.register();
 		ModBlockEntities.register();
+		ModItems.register();
 		ModScreenHandlers.register();
 	}
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "iJi",
+    "iCi"
+  ],
+  "key": {
+    "#": "minecraft:diamond",
+    "G": "minecraft:glass",
+    "i": "minecraft:iron_ingot",
+    "J": "minecraft:jukebox",
+    "C": "minecraft:comparator"
+  },
+  "result": {
+    "id": "jukeboxplus:advanced_jukebox",
+    "count": 1
+  }
+}

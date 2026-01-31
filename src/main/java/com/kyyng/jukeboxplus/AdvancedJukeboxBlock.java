@@ -122,6 +122,9 @@ public class AdvancedJukeboxBlock extends BlockWithEntity {
             BlockState state,
             BlockEntityType<T> type
     ) {
+        if (!state.get(HAS_RECORD)) {
+            return null;
+        }
         return world.isClient()
                 ? null
                 : validateTicker(type, ModBlockEntities.ADVANCED_JUKEBOX, AdvancedJukeboxBlockEntity::tick);

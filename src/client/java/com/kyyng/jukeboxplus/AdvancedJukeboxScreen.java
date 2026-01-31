@@ -15,7 +15,7 @@ public class AdvancedJukeboxScreen extends HandledScreen<AdvancedJukeboxScreenHa
     public AdvancedJukeboxScreen(AdvancedJukeboxScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         backgroundWidth = 176;
-        backgroundHeight = 186;
+        backgroundHeight = 222;
     }
 
     @Override
@@ -24,11 +24,16 @@ public class AdvancedJukeboxScreen extends HandledScreen<AdvancedJukeboxScreenHa
         titleX = 8;
         titleY = 6;
         playerInventoryTitleX = 8;
-        playerInventoryTitleY = 94;
+        playerInventoryTitleY = 129;
     }
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, 256, 256);
+    }
+
+    @Override
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        context.drawText(textRenderer, playerInventoryTitle, playerInventoryTitleX, playerInventoryTitleY, 4210752, false);
     }
 }

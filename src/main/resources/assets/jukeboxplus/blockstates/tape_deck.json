@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "jukeboxplus:block/tape_deck" },
+    "facing=east": { "model": "jukeboxplus:block/tape_deck", "y": 90 },
+    "facing=south": { "model": "jukeboxplus:block/tape_deck", "y": 180 },
+    "facing=west": { "model": "jukeboxplus:block/tape_deck", "y": 270 }
+  }
+}

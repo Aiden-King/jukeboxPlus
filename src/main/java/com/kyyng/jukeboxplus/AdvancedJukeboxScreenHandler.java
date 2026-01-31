@@ -13,14 +13,14 @@ import net.minecraft.util.math.BlockPos;
 
 public class AdvancedJukeboxScreenHandler extends ScreenHandler {
 
-    private static final int SLOT_COUNT = 36;
-    private static final int SLOT_COLUMNS = 9;
+    private static final int SLOT_COUNT = 32;
+    private static final int SLOT_COLUMNS = 8;
     private static final int SLOT_ROWS = 4;
     private static final int SLOT_SIZE = 18;
-    private static final int INVENTORY_X = 8;
-    private static final int INVENTORY_Y = 18;
+    private static final int INVENTORY_X = 17;
+    private static final int INVENTORY_Y = 23;
     private static final int PLAYER_INV_X = 8;
-    private static final int PLAYER_INV_Y = 104;
+    private static final int PLAYER_INV_Y = 140;
     private static final int HOTBAR_Y = PLAYER_INV_Y + 58;
 
     private final Inventory inventory;

@@ -26,6 +26,15 @@ public class ModBlockEntities {
                             .build()
             );
 
+    public static final BlockEntityType<TapeDeckBlockEntity> TAPE_DECK =
+            Registry.register(
+                    Registries.BLOCK_ENTITY_TYPE,
+                    Identifier.of(JukeboxPlus.MOD_ID, "tape_deck"),
+                    FabricBlockEntityTypeBuilder
+                            .create(TapeDeckBlockEntity::new, ModBlocks.TAPE_DECK)
+                            .build()
+            );
+
     public static void register() {
         // forces class loading
     }
