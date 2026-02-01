@@ -1,5 +1,6 @@
 package com.kyyng.jukeboxplus;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,14 @@ public class BlockmanItem extends Item {
         tooltip.accept(Text.translatable("tooltip.jukeboxplus.blockman").formatted(Formatting.GRAY));
     }
 
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (!world.isClient() && BlockmanData.isPlaying(stack)) {
+            if (!(entity instanceof PlayerEntity player) || !player.getInventory().contains(stack)) {
+                BlockmanData.setPlaying(stack, false);
+            }
+        }
+    }
+
     @Override
     public ActionResult use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
@@ -33,10 +42,6 @@ public class BlockmanItem extends Item {
                 openBlockmanScreen((ServerPlayerEntity) player, hand);
             }
             return ActionResult.SUCCESS;
-        }
-
-        if (hand != Hand.MAIN_HAND) {
-            return ActionResult.PASS;
         }
 
         ItemStack cassette = BlockmanData.getCassette(stack, world.getRegistryManager());
@@ -50,27 +55,24 @@ public class BlockmanItem extends Item {
         }
 
         boolean playing = BlockmanData.isPlaying(stack);
-        if (playing) {
-            if (world.isClient()) {
-                stopClientSound();
-                return ActionResult.SUCCESS;
-            }
-            BlockmanData.setPlaying(stack, false);
-            return ActionResult.SUCCESS;
-        }
-
         int index = BlockmanData.getPlayIndex(stack);
         if (index < 0 || index >= songs.size()) {
             index = 0;
         }
 
         if (world.isClient()) {
-            playClientSound(player, stack);
+            if (playing) {
+                stopClientSound(stack);
+            } else {
+                playClientSound(player, stack);
+            }
             return ActionResult.SUCCESS;
         }
 
-        BlockmanData.setPlayIndex(stack, (index + 1) % songs.size());
-        BlockmanData.setPlaying(stack, true);
+        if (!playing) {
+            BlockmanData.setPlayIndex(stack, (index + 1) % songs.size());
+        }
+        BlockmanData.setPlaying(stack, !playing);
         return ActionResult.SUCCESS;
     }
 
@@ -83,7 +85,7 @@ public class BlockmanItem extends Item {
         }
     }
 
-    private static void stopClientSound() {
+    private static void stopClientSound(ItemStack stack) {
         try {
             Class<?> cls = Class.forName("com.kyyng.jukeboxplus.BlockmanSoundPlayer");
             cls.getMethod("stop").invoke(null);

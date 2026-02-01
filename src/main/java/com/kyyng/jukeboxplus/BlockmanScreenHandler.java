@@ -37,6 +37,10 @@ public class BlockmanScreenHandler extends ScreenHandler {
         addSlot(new CassetteSlot(inventory, 0, SLOT_X, SLOT_Y));
         addPlayerInventorySlots(playerInventory, PLAYER_INV_X, PLAYER_INV_Y);
         addPlayerHotbarSlots(playerInventory, PLAYER_INV_X, HOTBAR_Y);
+
+        // Add the offhand slot to ensure it syncs when modified on the server
+        // The slot is added even if it's not the main hand to keep slot indices consistent
+        this.addSlot(new Slot(playerInventory, 40, -1000, -1000));
     }
 
     public boolean isMainHand() {
@@ -61,8 +65,11 @@ public class BlockmanScreenHandler extends ScreenHandler {
             ItemStack stack = slot.getStack();
             original = stack.copy();
 
+            // Ignore the offhand slot (the last slot added) for quick move
+            int playerEnd = slots.size() - 1;
+
             if (index == 0) {
-                if (!insertItem(stack, 1, slots.size(), true)) {
+                if (!insertItem(stack, 1, playerEnd, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (stack.isOf(ModItems.CASSETTE)) {
@@ -84,7 +91,7 @@ public class BlockmanScreenHandler extends ScreenHandler {
 
     @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
-        ItemStack blockman = mainHand ? player.getMainHandStack() : player.getOffHandStack();
+        ItemStack blockman = player.getStackInHand(mainHand ? Hand.MAIN_HAND : Hand.OFF_HAND);
         if (!blockman.isOf(ModItems.BLOCKMAN)) {
             return false;
         }
@@ -117,6 +124,9 @@ public class BlockmanScreenHandler extends ScreenHandler {
         // we need to make sure the client sees this.
         if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
             serverPlayer.currentScreenHandler.sendContentUpdates();
+            // If it's in the offhand, we also need to sync the offhand slot explicitly
+            // because standard sendContentUpdates might not include it if it's not a standard slot.
+            // But we added the offhand slot to the handler, so sendContentUpdates should cover it now.
         }
         
         return true;
