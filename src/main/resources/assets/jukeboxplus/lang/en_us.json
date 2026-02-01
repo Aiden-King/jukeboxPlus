@@ -2,5 +2,16 @@
   "item.jukeboxplus.blockman": "Blockman",
   "item.jukeboxplus.cassette": "Cassette",
   "item.jukeboxplus.empty_tape": "Empty Tape",
-  "block.jukeboxplus.tape_deck": "Tape Deck"
+  "block.jukeboxplus.tape_deck": "Tape Deck",
+  "block.jukeboxplus.advanced_jukebox": "Advanced Jukebox",
+  "block.jukeboxplus.disc_shelf": "Disc Shelf",
+  "item.jukeboxplus.tape_deck": "Tape Deck",
+  "item.jukeboxplus.advanced_jukebox": "Advanced Jukebox",
+  "item.jukeboxplus.disc_shelf": "Disc Shelf",
+  "tooltip.jukeboxplus.tape_deck": "Writes music from discs onto cassettes",
+  "tooltip.jukeboxplus.advanced_jukebox": "A jukebox that can hold multiple discs",
+  "tooltip.jukeboxplus.disc_shelf": "Stores up to 10 music discs",
+  "tooltip.jukeboxplus.blockman": "Portable music player",
+  "tooltip.jukeboxplus.empty_tape": "Blank cassette for recording",
+  "tooltip.jukeboxplus.cassette": "Contains recorded music"
 }

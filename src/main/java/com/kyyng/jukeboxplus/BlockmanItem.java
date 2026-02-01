@@ -9,12 +9,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.item.tooltip.TooltipType;
 import java.util.List;
 
 public class BlockmanItem extends Item {
 
     public BlockmanItem(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, net.minecraft.component.type.TooltipDisplayComponent displayComponent, java.util.function.Consumer<Text> tooltip, TooltipType type) {
+        tooltip.accept(Text.translatable("tooltip.jukeboxplus.blockman").formatted(Formatting.GRAY));
     }
 
     @Override

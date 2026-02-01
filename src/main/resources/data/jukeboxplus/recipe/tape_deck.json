@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "RJR",
+    "cLc"
+  ],
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "c": "minecraft:copper_ingot",
+    "R": "minecraft:redstone",
+    "J": "minecraft:jukebox",
+    "L": "minecraft:repeater"
+  },
+  "result": {
+    "id": "jukeboxplus:tape_deck",
+    "count": 1
+  }
+}

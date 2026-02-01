@@ -56,17 +56,20 @@ public class ModBlocks {
     );
 
     // ---------- ITEM ----------
-    public static final Item DISC_SHELF_ITEM = new BlockItem(
+    public static final Item DISC_SHELF_ITEM = new ModBlockItem(
             DISC_SHELF,
-            new Item.Settings().registryKey(DISC_SHELF_ITEM_KEY)
+            new Item.Settings().registryKey(DISC_SHELF_ITEM_KEY),
+            "tooltip.jukeboxplus.disc_shelf"
     );
-    public static final Item ADVANCED_JUKEBOX_ITEM = new BlockItem(
+    public static final Item ADVANCED_JUKEBOX_ITEM = new ModBlockItem(
             ADVANCED_JUKEBOX,
-            new Item.Settings().registryKey(ADVANCED_JUKEBOX_ITEM_KEY)
+            new Item.Settings().registryKey(ADVANCED_JUKEBOX_ITEM_KEY),
+            "tooltip.jukeboxplus.advanced_jukebox"
     );
-    public static final Item TAPE_DECK_ITEM = new BlockItem(
+    public static final Item TAPE_DECK_ITEM = new ModBlockItem(
             TAPE_DECK,
-            new Item.Settings().registryKey(TAPE_DECK_ITEM_KEY)
+            new Item.Settings().registryKey(TAPE_DECK_ITEM_KEY),
+            "tooltip.jukeboxplus.tape_deck"
     );
 
     public static void register() {

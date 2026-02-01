@@ -2,11 +2,16 @@ package com.kyyng.jukeboxplus;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
+
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class ModItems {
 
@@ -32,7 +37,12 @@ public class ModItems {
     );
     public static final Item EMPTY_TAPE = new Item(
             new Item.Settings().registryKey(EMPTY_TAPE_KEY)
-    );
+    ) {
+        @Override
+        public void appendTooltip(ItemStack stack, net.minecraft.item.Item.TooltipContext context, net.minecraft.component.type.TooltipDisplayComponent displayComponent, java.util.function.Consumer<Text> tooltip, TooltipType type) {
+            tooltip.accept(Text.translatable("tooltip.jukeboxplus.empty_tape").formatted(Formatting.GRAY));
+        }
+    };
 
     public static void register() {
         Registry.register(Registries.ITEM, BLOCKMAN_ID, BLOCKMAN);

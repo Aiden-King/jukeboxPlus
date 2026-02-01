@@ -72,6 +72,9 @@ public class BlockmanItemInventory implements Inventory {
 
     @Override
     public void markDirty() {
+        // Since this inventory is backed by the player's held item,
+        // we might need to ensure the item stack's NBT changes are synced.
+        // For a handheld screen, syncing usually happens via the screen handler.
     }
 
     @Override

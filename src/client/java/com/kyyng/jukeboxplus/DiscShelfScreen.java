@@ -30,6 +30,12 @@ public class DiscShelfScreen extends HandledScreen<DiscShelfScreenHandler> {
     }
 
     @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        drawMouseoverTooltip(context, mouseX, mouseY);
+    }
+
+    @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, 256, 256);
     }

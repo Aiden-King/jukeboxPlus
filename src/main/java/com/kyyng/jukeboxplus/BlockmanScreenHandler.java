@@ -10,14 +10,18 @@ import net.minecraft.util.Hand;
 
 public class BlockmanScreenHandler extends ScreenHandler {
 
-    private static final int SLOT_X = 121;
-    private static final int SLOT_Y = 69;
-    private static final int PLAYER_INV_X = 49;
-    private static final int PLAYER_INV_Y = 213;
-    private static final int HOTBAR_Y = 269;
+    private static final int SLOT_X = 86;
+    private static final int SLOT_Y = 66;
+    private static final int PLAYER_INV_X = 8;
+    private static final int PLAYER_INV_Y = 155;
+    private static final int HOTBAR_Y = 213;
 
     private final Inventory inventory;
     private final boolean mainHand;
+
+    public static final int PREVIOUS_BUTTON_ID = 0;
+    public static final int NEXT_BUTTON_ID = 1;
+    public static final int PLAY_BUTTON_ID = 2;
 
     public BlockmanScreenHandler(int syncId, PlayerInventory playerInventory, boolean mainHand) {
         this(syncId, playerInventory, getInventory(playerInventory, mainHand), mainHand);
@@ -76,6 +80,46 @@ public class BlockmanScreenHandler extends ScreenHandler {
             }
         }
         return original;
+    }
+
+    @Override
+    public boolean onButtonClick(PlayerEntity player, int id) {
+        ItemStack blockman = mainHand ? player.getMainHandStack() : player.getOffHandStack();
+        if (!blockman.isOf(ModItems.BLOCKMAN)) {
+            return false;
+        }
+
+        ItemStack cassette = BlockmanData.getCassette(blockman, player.getEntityWorld().getRegistryManager());
+        if (cassette.isEmpty()) {
+            return false;
+        }
+
+        java.util.List<net.minecraft.util.Identifier> songs = CassetteData.getSongs(cassette);
+        if (songs.isEmpty()) {
+            return false;
+        }
+
+        int index = BlockmanData.getPlayIndex(blockman);
+        if (id == PREVIOUS_BUTTON_ID) {
+            index = (index - 1 + songs.size()) % songs.size();
+            BlockmanData.setPlayIndex(blockman, index);
+        } else if (id == NEXT_BUTTON_ID) {
+            index = (index + 1) % songs.size();
+            BlockmanData.setPlayIndex(blockman, index);
+        } else if (id == PLAY_BUTTON_ID) {
+            boolean playing = BlockmanData.isPlaying(blockman);
+            BlockmanData.setPlaying(blockman, !playing);
+        } else {
+            return false;
+        }
+
+        // Sync the changes to client. Since we're changing CUSTOM_DATA on the item in hand,
+        // we need to make sure the client sees this.
+        if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
+            serverPlayer.currentScreenHandler.sendContentUpdates();
+        }
+        
+        return true;
     }
 
     @Override

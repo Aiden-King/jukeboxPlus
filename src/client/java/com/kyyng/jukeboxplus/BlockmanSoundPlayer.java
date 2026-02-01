@@ -61,6 +61,7 @@ public final class BlockmanSoundPlayer {
                 player.getRandom().nextLong()
         );
         soundManager.play(currentSound);
+        client.inGameHud.setRecordPlayingOverlay(song.description());
     }
 
     public static void stop() {

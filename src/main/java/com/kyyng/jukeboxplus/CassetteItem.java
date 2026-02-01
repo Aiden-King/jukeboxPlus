@@ -8,6 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.item.tooltip.TooltipType;
 
+import net.minecraft.util.Formatting;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -27,11 +28,28 @@ public class CassetteItem extends Item {
     ) {
         List<Identifier> songs = CassetteData.getSongs(stack);
         if (songs.isEmpty()) {
-            tooltip.accept(Text.literal("Empty"));
+            tooltip.accept(Text.translatable("tooltip.jukeboxplus.cassette").formatted(Formatting.GRAY));
+            tooltip.accept(Text.literal("Empty").formatted(Formatting.GRAY));
             return;
         }
+
+        tooltip.accept(Text.translatable("tooltip.jukeboxplus.cassette").formatted(Formatting.GRAY));
+
         for (Identifier id : songs) {
-            tooltip.accept(Text.literal(id.toString()));
+            boolean found = false;
+            if (context.getRegistryLookup() != null) {
+                var lookup = context.getRegistryLookup().getOptional(net.minecraft.registry.RegistryKeys.JUKEBOX_SONG);
+                if (lookup.isPresent()) {
+                    var entry = lookup.get().getOptional(net.minecraft.registry.RegistryKey.of(net.minecraft.registry.RegistryKeys.JUKEBOX_SONG, id));
+                    if (entry.isPresent()) {
+                        tooltip.accept(entry.get().value().description());
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                tooltip.accept(Text.literal(id.toString()).formatted(net.minecraft.util.Formatting.GRAY));
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -17,11 +18,15 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class TapeDeckBlock extends BlockWithEntity {
 
     public static final Property<Direction> FACING = Properties.HORIZONTAL_FACING;
+    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0);
 
     public static final MapCodec<TapeDeckBlock> CODEC =
             createCodec(TapeDeckBlock::new);
@@ -37,6 +42,11 @@ public class TapeDeckBlock extends BlockWithEntity {
     }
 
     @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
+    }
+
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
@@ -44,6 +54,11 @@ public class TapeDeckBlock extends BlockWithEntity {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new TapeDeckBlockEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.block.entity.BlockEntityTicker<T> getTicker(World world, BlockState state, net.minecraft.block.entity.BlockEntityType<T> type) {
+        return validateTicker(type, ModBlockEntities.TAPE_DECK, TapeDeckBlockEntity::tick);
     }
 
     @Override

@@ -6,7 +6,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 
@@ -22,21 +24,24 @@ public class TapeDeckScreenHandler extends ScreenHandler {
 
     private final Inventory inventory;
     private final BlockPos pos;
+    private final PropertyDelegate propertyDelegate;
 
     public TapeDeckScreenHandler(int syncId, PlayerInventory playerInventory, TapeDeckBlockEntity deck) {
-        this(syncId, playerInventory, (Inventory) deck, deck.getPos());
+        this(syncId, playerInventory, (Inventory) deck, deck.getPos(), deck.propertyDelegate);
     }
 
     public TapeDeckScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
-        this(syncId, playerInventory, getInventory(playerInventory, pos), pos);
+        this(syncId, playerInventory, getInventory(playerInventory, pos), pos, new ArrayPropertyDelegate(3));
     }
 
-    private TapeDeckScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, BlockPos pos) {
+    private TapeDeckScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, BlockPos pos, PropertyDelegate propertyDelegate) {
         super(ModScreenHandlers.TAPE_DECK, syncId);
         checkSize(inventory, TapeDeckBlockEntity.SLOT_COUNT);
         this.inventory = inventory;
         this.pos = pos;
+        this.propertyDelegate = propertyDelegate;
         inventory.onOpen(playerInventory.player);
+        addProperties(propertyDelegate);
 
         addSlot(new DiscSlot(inventory, TapeDeckBlockEntity.DISC_SLOT, DISC_X, DISC_Y));
         addSlot(new TapeSlot(inventory, TapeDeckBlockEntity.TAPE_SLOT, TAPE_X, TAPE_Y));
@@ -50,6 +55,10 @@ public class TapeDeckScreenHandler extends ScreenHandler {
             return deck;
         }
         return new SimpleInventory(TapeDeckBlockEntity.SLOT_COUNT);
+    }
+
+    public int getWriteTime() {
+        return propertyDelegate.get(2);
     }
 
     @Override
@@ -130,6 +139,14 @@ public class TapeDeckScreenHandler extends ScreenHandler {
         public boolean canInsert(ItemStack stack) {
             return stack.isOf(ModItems.EMPTY_TAPE) || stack.isOf(ModItems.CASSETTE);
         }
+    }
+
+    public int getWriteProgress() {
+        return propertyDelegate.get(0);
+    }
+
+    public boolean isWriting() {
+        return propertyDelegate.get(1) != 0;
     }
 
 }

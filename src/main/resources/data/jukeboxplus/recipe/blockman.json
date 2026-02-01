@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "cJc",
+    " A "
+  ],
+  "key": {
+    "i": "minecraft:iron_ingot",
+    "c": "minecraft:copper_ingot",
+    "J": "minecraft:jukebox",
+    "A": "minecraft:quartz"
+  },
+  "result": {
+    "id": "jukeboxplus:blockman",
+    "count": 1
+  }
+}
