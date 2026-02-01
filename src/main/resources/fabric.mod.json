@@ -3,9 +3,9 @@
 	"id": "jukeboxplus",
 	"version": "${version}",
 	"name": "JukeboxPlus",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Better Jukeboxes, cassette tapes, and more!",
 	"authors": [
-		"Me!"
+		"Aiden King"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
