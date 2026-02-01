@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -72,9 +73,7 @@ public class BlockmanScreen extends HandledScreen<BlockmanScreenHandler> {
     private void checkTrackChange() {
         if (client == null || client.player == null) return;
         
-        ItemStack blockman = handler.isMainHand()
-                ? client.player.getMainHandStack()
-                : client.player.getOffHandStack();
+        ItemStack blockman = client.player.getStackInHand(handler.isMainHand() ? Hand.MAIN_HAND : Hand.OFF_HAND);
                 
         if (!blockman.isOf(ModItems.BLOCKMAN)) return;
         
@@ -97,7 +96,9 @@ public class BlockmanScreen extends HandledScreen<BlockmanScreenHandler> {
         if (playing != lastPlayingState) {
             lastPlayingState = playing;
             if (playing) {
-                BlockmanSoundPlayer.playFromBlockman(client.player, blockman);
+                if (!BlockmanSoundPlayer.isPlaying(blockman)) {
+                    BlockmanSoundPlayer.playFromBlockman(client.player, blockman);
+                }
             } else {
                 BlockmanSoundPlayer.stop();
             }
@@ -108,9 +109,7 @@ public class BlockmanScreen extends HandledScreen<BlockmanScreenHandler> {
         if (client == null || client.player == null) {
             return;
         }
-        ItemStack blockman = handler.isMainHand()
-                ? client.player.getMainHandStack()
-                : client.player.getOffHandStack();
+        ItemStack blockman = client.player.getStackInHand(handler.isMainHand() ? Hand.MAIN_HAND : Hand.OFF_HAND);
         ItemStack cassette = BlockmanData.getCassette(blockman, client.player.getEntityWorld().getRegistryManager());
         List<Identifier> songs = CassetteData.getSongs(cassette);
 
